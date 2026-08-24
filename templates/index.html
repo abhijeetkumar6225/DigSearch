@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="description"
+    content="DigSearch - Multi-agent AI research platform"
+  >
+
+  <title>DigSearch — Research Deeper. Discover Faster.</title>
+  <style>
+    .go-top {
+  position: fixed;
+  right: 25px;
+  bottom: 25px;
+  width: 50px;
+  height: 50px;
+  border: 1px solid #666;
+  border-radius: 50%;
+  background: #222;
+  color: #fff; /* Arrow color */
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(15px);
+  transition: 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+}
+
+.go-top.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.go-top:hover {
+  background: #555;
+  color: #fff;
+  transform: translateY(-4px);
+}
+
+  </style>
+
+  <!-- =====================================================
+       CLERK
+       ===================================================== -->
+
+  <!-- Clerk UI -->
+<script
+    defer
+    crossorigin="anonymous"
+    src="https://topical-beagle-9872.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js"
+    type="text/javascript">
+</script>
+
+<!-- Clerk JS -->
+<script
+    defer
+    crossorigin="anonymous"
+    data-clerk-publishable-key="{{ clerk_publishable_key }}"
+    src="https://topical-beagle-9872.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js"
+    type="text/javascript">
+</script>
+
+
+  <!-- =====================================================
+       DIGSEARCH CSS
+       ===================================================== -->
+
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/style.css') }}"
+  >
+
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/home.css') }}"
+  >
+
+</head>
+
+
+<body>
+
+  <div class="page-shell">
+
+    <!-- ===================================================
+         NAVBAR
+         =================================================== -->
+
+    <nav class="navbar">
+
+      <a class="brand" href="/">
+        <span class="brand-mark">D</span>
+        <span>DigSearch</span>
+      </a>
+
+
+      <!-- MOBILE MENU -->
+
+      <button
+        class="mobile-menu-btn"
+        id="mobileMenuBtn"
+        aria-label="Open menu"
+        type="button"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+
+      <!-- NAVIGATION -->
+
+      <div
+        class="nav-links"
+        id="navLinks"
+      >
+
+        <a
+          class="active"
+          href="/"
+        >
+          Home
+        </a>
+
+        <a href="#how-it-works">
+          How It Works
+        </a>
+
+        <a href="#features">
+          Features
+        </a>
+
+        <a href="/about">
+          About
+        </a>
+
+      </div>
+
+
+      <!-- =================================================
+           AUTH ACTIONS
+           ================================================= -->
+
+      <div
+        class="nav-actions"
+        id="navActions"
+      >
+
+        <!-- LOGGED OUT -->
+
+        <div id="loggedOutActions">
+
+          <button
+            class="btn btn-ghost"
+            id="loginBtn"
+            type="button"
+          >
+            Log In
+          </button>
+
+
+          <button
+            class="btn btn-primary"
+            id="signupBtn"
+            type="button"
+          >
+            Get Started
+          </button> 
+
+        </div>
+
+
+        <!-- LOGGED IN -->
+
+        <div
+          id="loggedInActions"
+          style="display: none; align-items: center; gap: 12px;"
+        >
+
+          <span
+            id="welcomeUser"
+            style="font-size: 14px;"
+          ></span>
+
+
+          <!-- Clerk User Button -->
+
+          <div id="clerkUserButton"></div>
+
+        </div>
+
+      </div>
+
+    </nav>
+
+
+    <!-- ===================================================
+         MAIN
+         =================================================== -->
+
+    <main>
+      <button id="goTopButton" class="go-top" aria-label="Go to top">
+  ↑
+</button>
+
+      <!-- =================================================
+           HERO
+           ================================================= -->
+
+      <section class="hero container">
+
+        <div class="hero-copy">
+
+          <div class="eyebrow">
+
+            <span class="status-dot"></span>
+
+            Multi-agent AI research
+
+          </div>
+
+
+          <h1>
+            Research deeper.<br>
+            <span>Discover faster.</span>
+          </h1>
+
+
+          <p>
+            DigSearch orchestrates specialized AI agents to
+            investigate complex questions, analyze findings,
+            and synthesize them into structured research reports.
+          </p>
+
+
+          <div class="hero-actions">
+
+            <!--
+              IMPORTANT:
+
+              This is no longer a normal link.
+
+              JavaScript checks authentication first.
+            -->
+
+            <button
+              class="btn btn-primary btn-large"
+              id="heroResearchBtn"
+              type="button"
+            >
+              Start Research
+              <span>→</span>
+            </button>
+
+
+            <a
+              href="#how-it-works"
+              class="btn btn-secondary btn-large"
+            >
+              See How It Works
+            </a>
+
+          </div>
+
+
+          <div class="hero-meta">
+
+            <span>Multi-agent workflow</span>
+
+            <span>•</span>
+
+            <span>Source-aware</span>
+
+            <span>•</span>
+
+            <span>Structured output</span>
+
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             ARCHITECTURE CARD
+             ================================================= -->
+
+        <div class="architecture-card">
+
+          <div class="architecture-top">
+
+            <div>
+
+              <span class="mini-label">
+                DIGSEARCH ENGINE
+              </span>
+
+              <h3>
+                One question. Multiple perspectives.
+              </h3>
+
+            </div>
+
+            <span class="live-pill">
+              <span></span>
+              Ready
+            </span>
+
+          </div>
+
+
+          <div class="query-node">
+
+            <span class="node-icon">
+              ⌕
+            </span>
+
+            <div>
+
+              <small>
+                USER QUERY
+              </small>
+
+              <strong>
+                Research a complex question
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <div class="connector"></div>
+
+
+          <div class="agent-grid">
+
+            <div class="agent-card">
+
+              <span class="agent-icon">
+                ⌁
+              </span>
+
+              <div>
+
+                <small>
+                  AGENT 01
+                </small>
+
+                <strong>
+                  Research
+                </strong>
+
+              </div>
+
+            </div>
+
+
+            <div class="agent-card">
+
+              <span class="agent-icon">
+                ◈
+              </span>
+
+              <div>
+
+                <small>
+                  AGENT 02
+                </small>
+
+                <strong>
+                  Search
+                </strong>
+
+              </div>
+
+            </div>
+
+
+            <div class="agent-card">
+
+              <span class="agent-icon">
+                ◎
+              </span>
+
+              <div>
+
+                <small>
+                  AGENT 03
+                </small>
+
+                <strong>
+                  Analysis
+                </strong>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="connector short"></div>
+
+
+          <div class="synthesis-node">
+
+            <div class="synthesis-icon">
+              ✦
+            </div>
+
+            <div>
+
+              <small>
+                SYNTHESIS
+              </small>
+
+              <strong>
+                Research Report
+              </strong>
+
+            </div>
+
+            <span class="arrow">
+              →
+            </span>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           STATS
+           ================================================= -->
+
+      <section class="stats-strip">
+
+        <div class="container stats-grid">
+
+          <div>
+            <strong>01</strong>
+            <span>Ask a question</span>
+          </div>
+
+          <div>
+            <strong>02</strong>
+            <span>Agents investigate</span>
+          </div>
+
+          <div>
+            <strong>03</strong>
+            <span>Findings are synthesized</span>
+          </div>
+
+          <div>
+            <strong>04</strong>
+            <span>Receive a report</span>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           FEATURES
+           ================================================= -->
+
+      <section
+        class="section container"
+        id="features"
+      >
+
+        <div class="section-heading">
+
+          <span class="eyebrow">
+            WHY DIGSEARCH
+          </span>
+
+          <h2>
+            Research is more than generating an answer.
+          </h2>
+
+          <p>
+            DigSearch is designed around a research workflow
+            rather than a single prompt-and-response interaction.
+          </p>
+
+        </div>
+
+
+        <div class="feature-grid">
+
+          <article class="feature-card">
+
+            <div class="feature-number">
+              01
+            </div>
+
+            <h3>
+              Multi-Agent Research
+            </h3>
+
+            <p>
+              Specialized agents can tackle different parts
+              of a complex research problem.
+            </p>
+
+          </article>
+
+
+          <article class="feature-card">
+
+            <div class="feature-number">
+              02
+            </div>
+
+            <h3>
+              Deep Investigation
+            </h3>
+
+            <p>
+              Break broad questions into focused research
+              tasks before producing the final synthesis.
+            </p>
+
+          </article>
+
+
+          <article class="feature-card">
+
+            <div class="feature-number">
+              03
+            </div>
+
+            <h3>
+              Intelligent Synthesis
+            </h3>
+
+            <p>
+              Bring findings together into a readable,
+              structured response instead of scattered outputs.
+            </p>
+
+          </article>
+
+
+          <article class="feature-card">
+
+            <div class="feature-number">
+              04
+            </div>
+
+            <h3>
+              Source-Aware Results
+            </h3>
+
+            <p>
+              When sources are returned by the research
+              pipeline, DigSearch presents them alongside the report.
+            </p>
+
+          </article>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           HOW IT WORKS
+           ================================================= -->
+
+      <section
+        class="workflow-section"
+        id="how-it-works"
+      >
+
+        <div class="container">
+
+          <div class="section-heading centered">
+
+            <span class="eyebrow">
+              HOW IT WORKS
+            </span>
+
+            <h2>
+              From question to understanding.
+            </h2>
+
+            <p>
+              A simple interface on top of a multi-agent
+              research workflow.
+            </p>
+
+          </div>
+
+
+          <div class="workflow">
+
+            <div class="workflow-line"></div>
+
+
+            <article class="workflow-step">
+
+              <span>01</span>
+
+              <div>
+
+                <h3>
+                  Ask
+                </h3>
+
+                <p>
+                  Describe the question or topic you want to investigate.
+                </p>
+
+              </div>
+
+            </article>
+
+
+            <article class="workflow-step">
+
+              <span>02</span>
+
+              <div>
+
+                <h3>
+                  Plan
+                </h3>
+
+                <p>
+                  The research workflow determines what needs to be investigated.
+                </p>
+
+              </div>
+
+            </article>
+
+
+            <article class="workflow-step">
+
+              <span>03</span>
+
+              <div>
+
+                <h3>
+                  Investigate
+                </h3>
+
+                <p>
+                  Specialized agents gather and analyze information.
+                </p>
+
+              </div>
+
+            </article>
+
+
+            <article class="workflow-step">
+
+              <span>04</span>
+
+              <div>
+
+                <h3>
+                  Synthesize
+                </h3>
+
+                <p>
+                  Findings are combined into a coherent research report.
+                </p>
+
+              </div>
+
+            </article>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           CTA
+           ================================================= -->
+
+      <section class="cta-section container">
+
+        <div class="cta-card">
+
+          <div>
+
+            <span class="eyebrow">
+              READY TO RESEARCH?
+            </span>
+
+            <h2>
+              Turn a complex question into a structured investigation.
+            </h2>
+
+          </div>
+
+
+          <button
+            class="btn btn-primary btn-large"
+            id="ctaResearchBtn"
+            type="button"
+          >
+            Start Research →
+          </button>
+
+        </div>
+
+      </section>
+
+    </main>
+
+
+    <!-- ===================================================
+         FOOTER
+         =================================================== -->
+
+    <footer class="footer container">
+
+      <div>
+
+        <a
+          class="brand"
+          href="/"
+        >
+
+          <span class="brand-mark">
+            D
+          </span>
+
+          <span>
+            DigSearch
+          </span>
+
+        </a>
+
+        <p>
+          AI-powered multi-agent research.
+        </p>
+
+      </div>
+
+
+      <div class="footer-links">
+
+        <a href="/">
+          Home
+        </a>
+
+        <a
+        href="/research"
+       
+        >Research</a> 
+
+        <a href="/about">
+          About
+        </a>
+
+      </div>
+
+
+      <span>
+        © 2026 DigSearch
+      </span>
+
+    </footer>
+
+  </div>
+  <!-- Scroll To Top -->
+<button
+  class="scroll-top-button"
+  id="scrollTopButton"
+  aria-label="Scroll to top"
+  title="Back to top"
+>
+
+  <svg
+    class="scroll-progress-ring"
+    viewBox="0 0 52 52"
+    aria-hidden="true"
+  >
+
+    <!-- Background ring -->
+    <circle
+      class="scroll-progress-track"
+      cx="26"
+      cy="26"
+      r="21"
+    ></circle>
+
+    <!-- Progress ring -->
+    <circle
+      class="scroll-progress"
+      id="scrollProgress"
+      cx="26"
+      cy="26"
+      r="21"
+    ></circle>
+
+  </svg>
+
+
+  <!-- Arrow -->
+  <span class="scroll-top-arrow">
+    ↑
+  </span>
+
+</button>
+  
+ 
+
+
+  <!-- =====================================================
+       DIGSEARCH JAVASCRIPT
+       ===================================================== -->
+  <!-- Clerk -->
+<script
+  defer
+  crossorigin="anonymous"
+  data-clerk-publishable-key="{{ clerk_publishable_key }}"
+  src="https://topical-beagle-9872.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js"
+  type="text/javascript">
+</script>
+
+<!-- DigSearch JS -->
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+<script src="{{ url_for('static', filename='js/scroll-top.js') }}"></script>
+
+ 
+
+
+  <!-- =====================================================
+       CLERK AUTHENTICATION
+       ===================================================== -->
+
+  <script>
+       
+
+window.addEventListener("load", async function () {
+
+    console.log("=================================");
+    console.log("DigSearch Clerk initialization");
+    console.log("=================================");
+
+
+    try {
+
+        /*
+         * =====================================================
+         * CHECK CLERK
+         * =====================================================
+         */
+
+        if (typeof Clerk === "undefined") {
+
+            console.error(
+                "Clerk is not defined."
+            );
+
+            console.error(
+                "Check your Clerk <script> tags in <head>."
+            );
+
+            return;
+        }
+
+
+        console.log(
+            "Clerk JavaScript loaded."
+        );
+
+
+        /*
+         * =====================================================
+         * LOAD CLERK
+         * =====================================================
+         */
+
+        await Clerk.load();
+
+
+        console.log(
+            "Clerk loaded successfully."
+        );
+
+        console.log(
+            "Signed in:",
+            Clerk.isSignedIn
+        );
+
+
+        /*
+         * =====================================================
+         * DOM ELEMENTS
+         * =====================================================
+         */
+
+        const loginBtn =
+            document.getElementById("loginBtn");
+
+        const signupBtn =
+            document.getElementById("signupBtn");
+
+        const loggedOutActions =
+            document.getElementById(
+                "loggedOutActions"
+            );
+
+        const loggedInActions =
+            document.getElementById(
+                "loggedInActions"
+            );
+
+        const clerkUserButton =
+            document.getElementById(
+                "clerkUserButton"
+            );
+
+        const welcomeUser =
+            document.getElementById(
+                "welcomeUser"
+            );
+
+        const heroResearchBtn =
+            document.getElementById(
+                "heroResearchBtn"
+            );
+
+        const ctaResearchBtn =
+            document.getElementById(
+                "ctaResearchBtn"
+            );
+
+
+        /*
+         * =====================================================
+         * CHECK REQUIRED ELEMENTS
+         * =====================================================
+         */
+
+        console.log(
+            "Login button:",
+            loginBtn
+        );
+
+        console.log(
+            "Signup button:",
+            signupBtn
+        );
+
+
+        if (!loginBtn) {
+
+            console.error(
+                "ERROR: loginBtn was not found."
+            );
+
+            return;
+        }
+
+
+        if (!signupBtn) {
+
+            console.error(
+                "ERROR: signupBtn was not found."
+            );
+
+            return;
+        }
+
+
+        /*
+         * =====================================================
+         * UPDATE AUTH UI
+         * =====================================================
+         */
+
+        function updateAuthUI() {
+
+            console.log(
+                "Updating authentication UI..."
+            );
+
+
+            /*
+             * ================================================
+             * USER IS LOGGED IN
+             * ================================================
+             */
+
+            if (Clerk.isSignedIn) {
+
+                console.log(
+                    "User is authenticated."
+                );
+
+
+                /*
+                 * Hide Login / Signup
+                 */
+
+                if (loggedOutActions) {
+
+                    loggedOutActions.style.display =
+                        "none";
+
+                }
+
+
+                /*
+                 * Show user section
+                 */
+
+                if (loggedInActions) {
+
+                    loggedInActions.style.display =
+                        "flex";
+
+                }
+
+
+                /*
+                 * Get Clerk user
+                 */
+
+                const user =
+                    Clerk.user;
+
+
+                if (user) {
+
+                    const firstName =
+                        user.firstName;
+
+                    const email =
+                        user.primaryEmailAddress
+                            ?.emailAddress;
+
+
+                    if (firstName) {
+
+                        welcomeUser.textContent =
+                            `Hi, ${firstName}`;
+
+                    }
+                    else if (email) {
+
+                        welcomeUser.textContent =
+                            `Hi, ${email}`;
+
+                    }
+
+                }
+
+
+                /*
+                 * Mount Clerk User Button
+                 */
+
+                if (clerkUserButton) {
+
+                    clerkUserButton.innerHTML = "";
+
+                    Clerk.mountUserButton(
+                        clerkUserButton
+                    );
+
+                }
+
+            }
+
+
+            /*
+             * ================================================
+             * USER IS LOGGED OUT
+             * ================================================
+             */
+
+            else {
+
+                console.log(
+                    "User is not authenticated."
+                );
+
+
+                /*
+                 * Show Login / Signup
+                 */
+
+                if (loggedOutActions) {
+
+                    loggedOutActions.style.display =
+                        "flex";
+
+                }
+
+
+                /*
+                 * Hide user section
+                 */
+
+                if (loggedInActions) {
+
+                    loggedInActions.style.display =
+                        "none";
+
+                }
+
+
+                if (welcomeUser) {
+
+                    welcomeUser.textContent = "";
+
+                }
+
+
+                if (clerkUserButton) {
+
+                    clerkUserButton.innerHTML = "";
+
+                }
+
+            }
+
+        }
+
+
+        /*
+         * =====================================================
+         * LOGIN BUTTON
+         * =====================================================
+         */
+
+        loginBtn.addEventListener(
+            "click",
+            async function () {
+
+                console.log(
+                    "LOGIN BUTTON CLICKED"
+                );
+
+
+                try {
+
+                    await Clerk.openSignIn();
+
+                    console.log(
+                        "Clerk Sign In opened."
+                    );
+
+                }
+                catch (error) {
+
+                    console.error(
+                        "Failed to open Clerk Sign In:",
+                        error
+                    );
+
+                }
+
+            }
+        );
+
+
+        /*
+         * =====================================================
+         * SIGNUP BUTTON
+         * =====================================================
+         */
+
+        signupBtn.addEventListener(
+            "click",
+            async function () {
+
+                console.log(
+                    "SIGNUP BUTTON CLICKED"
+                );
+
+
+                try {
+
+                    await Clerk.openSignUp();
+
+                    console.log(
+                        "Clerk Sign Up opened."
+                    );
+
+                }
+                catch (error) {
+
+                    console.error(
+                        "Failed to open Clerk Sign Up:",
+                        error
+                    );
+
+                }
+
+            }
+        );
+
+
+        /*
+         * =====================================================
+         * START RESEARCH
+         * =====================================================
+         */
+
+        async function startResearch() {
+
+            console.log(
+                "START RESEARCH CLICKED"
+            );
+
+
+            /*
+             * User isn't logged in
+             */
+
+            if (!Clerk.isSignedIn) {
+
+                console.log(
+                    "User must login first."
+                );
+
+
+                try {
+
+                    await Clerk.openSignIn();
+
+                }
+                catch (error) {
+
+                    console.error(
+                        "Failed to open Clerk Sign In:",
+                        error
+                    );
+
+                }
+
+                return;
+
+            }
+
+
+            /*
+             * User is authenticated
+             */
+
+            console.log(
+                "User authenticated. Opening research..."
+            );
+
+
+            window.location.href =
+                "/research";
+
+        }
+
+
+        /*
+         * Hero Research Button
+         */
+
+        if (heroResearchBtn) {
+
+            heroResearchBtn.addEventListener(
+                "click",
+                startResearch
+            );
+
+        }
+
+
+        /*
+         * CTA Research Button
+         */
+
+        if (ctaResearchBtn) {
+
+            ctaResearchBtn.addEventListener(
+                "click",
+                startResearch
+            );
+
+        }
+
+
+        /*
+         * =====================================================
+         * CLERK AUTH STATE LISTENER
+         * =====================================================
+         */
+
+        Clerk.addListener(
+            function () {
+
+                console.log(
+                    "Clerk authentication state changed."
+                );
+
+
+                updateAuthUI();
+
+            }
+        );
+
+
+        /*
+         * =====================================================
+         * INITIAL UI
+         * =====================================================
+         */
+
+        updateAuthUI();
+
+
+        console.log(
+            "DigSearch Clerk initialization complete."
+        );
+
+
+    }
+    catch (error) {
+
+        console.error(
+            "================================="
+        );
+
+        console.error(
+            "CLERK INITIALIZATION ERROR"
+        );
+
+        console.error(
+            error
+        );
+
+        console.error(
+            "================================="
+        );
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
+

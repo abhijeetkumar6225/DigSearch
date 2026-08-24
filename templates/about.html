@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — DigSearch</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+</head>
+<body>
+  <nav class="navbar">
+    <a class="brand" href="/"><span class="brand-mark">D</span><span>DigSearch</span></a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/research">Research</a>
+      <a class="active" href="/about">About</a>
+    </div>
+    <div class="nav-actions" id="navActions">
+      <button class="btn btn-ghost" id="loginBtn">Log In</button>
+      <button class="btn btn-primary" id="signupBtn">Get Started</button>
+    </div>
+  </nav>
+
+  <main class="about-page container">
+    <section class="about-hero">
+      <span class="eyebrow">ABOUT DIGSEARCH</span>
+      <h1>A research interface built around <span>multiple agents.</span></h1>
+      <p>DigSearch provides a focused interface for your existing multi-agent AI research pipeline, turning complex questions into structured investigations.</p>
+    </section>
+
+    <section class="about-grid">
+      <article class="about-card">
+        <span>01</span>
+        <h2>What is DigSearch?</h2>
+        <p>DigSearch is a multi-agent AI research tool designed to orchestrate specialized research tasks and synthesize their findings into useful reports.</p>
+      </article>
+      <article class="about-card">
+        <span>02</span>
+        <h2>Why multi-agent?</h2>
+        <p>Complex research can benefit from separating planning, searching, analysis, verification, and synthesis into distinct responsibilities.</p>
+      </article>
+      <article class="about-card">
+        <span>03</span>
+        <h2>Built for exploration</h2>
+        <p>Use DigSearch for technical topics, research questions, comparisons, analysis, and other problems where a deeper workflow is useful.</p>
+      </article>
+    </section>
+
+    <section class="architecture-wide">
+      <span class="eyebrow">THE WORKFLOW</span>
+      <div class="about-flow">
+        <div>Question</div><i>→</i><div>Planning</div><i>→</i><div>Agents</div><i>→</i><div>Analysis</div><i>→</i><div>Synthesis</div><i>→</i><div>Report</div>
+      </div>
+    </section>
+  </main>
+  <!-- Scroll To Top -->
+<button
+  class="scroll-top-button"
+  id="scrollTopButton"
+  aria-label="Scroll to top"
+  title="Back to top"
+>
+  <svg
+    class="scroll-progress-ring"
+    viewBox="0 0 52 52"
+    aria-hidden="true"
+  >
+    <circle
+      class="scroll-progress-track"
+      cx="26"
+      cy="26"
+      r="21"
+    ></circle>
+
+    <circle
+      class="scroll-progress"
+      id="scrollProgress"
+      cx="26"
+      cy="26"
+      r="21"
+    ></circle>
+  </svg>
+
+  <span class="scroll-top-arrow">↑</span>
+</button>
+
+  <footer class="footer container">
+    <div><a class="brand" href="/"><span class="brand-mark">D</span><span>DigSearch</span></a><p>AI-powered multi-agent research.</p></div>
+    <div class="footer-links">
+      <a href="/">Home</a>
+     <a href="/research">Research</a> 
+      <a href="/about">About</a>
+    </div>
+    <span>© 2026 DigSearch</span>
+  </footer>
+  <script
+  defer
+  crossorigin="anonymous"
+  data-clerk-publishable-key="{{ clerk_publishable_key }}"
+  src="https://topical-beagle-9872.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js"
+  type="text/javascript">
+</script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/scroll-top.js') }}"></script>
+</body>
+</html>
