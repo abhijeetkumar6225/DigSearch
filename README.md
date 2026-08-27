@@ -4,6 +4,9 @@
 
 **Status:** 🚧 Agent pipeline complete · Flask + HTML/CSS/JS frontend in progress (migrated from an earlier Streamlit prototype)
 
+## Live Demo
+https://digsearch.onrender.com/
+
 ## Overview
 
 DigSearch is a multi-agent AI research assistant that automates researching a topic end-to-end. Four agents run in sequence — each handing its output to the next — so you get a sourced, self-reviewed draft instead of a blank page.
