@@ -42,6 +42,21 @@ flowchart LR
 - **Auth:** Clerk (Google OAuth via OIDC)
 - **Frontend:** HTML, CSS, vanilla JavaScript
 
+## Authentication
+
+Research runs are gated behind sign-in, handled through **Clerk**, configured as a standard OpenID Connect (OIDC) provider and consumed in Flask via **Authlib**.
+
+- **Public:** Home and About are visible to everyone — no login required.
+- **Gated:** the Research page (and its underlying API route) checks the Flask session and redirects unauthenticated visitors to `/login`.
+- **Flow:** `/login` redirects to Clerk's authorization endpoint → user signs in with Google → Clerk redirects back to `/oauth2callback` → the app exchanges the code and stores the user's identity in the session → the visitor lands back on the Research page.
+- **Sign out:** `/logout` clears the session.
+
+### Setting up Clerk for this project
+1. Create a Clerk application and enable Google as a sign-in method.
+2. From Clerk's dashboard, grab the OAuth application's **Client ID**, **Client Secret**, and the OIDC discovery URL (`.../.well-known/openid-configuration`).
+3. Set the redirect URI in Clerk's dashboard to match `OAUTH_REDIRECT_URI` below.
+4. Add all four values to `.env` (see **Environment variables**).
+
 ## Project structure
 
 ```
@@ -75,7 +90,7 @@ multi-agent-research-tool/
 
 ### Prerequisites
 - Python 3.10+
-- A Clerk application configured for OAuth/OIDC (client ID, client secret, and OIDC discovery URL)
+- A Clerk application set up for Google sign-in (see **Authentication** above)
 
 ### Installation
 ```bash
