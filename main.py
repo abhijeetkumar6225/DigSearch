@@ -292,6 +292,10 @@ def health():
         "success": True,
         "message": "DigSearch API is running"
     })
+@app.route("/health", methods=["GET"])
+def health():
+    return {"status": "healthy"}, 200
+
 
 
 # ============================================================
